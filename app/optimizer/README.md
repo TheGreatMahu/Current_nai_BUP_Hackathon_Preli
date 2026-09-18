@@ -67,4 +67,4 @@ The model enforces energy balance, battery state transitions, bounds, directive 
 - The optimizer is deterministic for fixed inputs and solver configuration.
 - Battery charge/discharge variables are continuous.
 - The current model relies on cost minimization to avoid simultaneous charge and discharge; binary action variables can be introduced later if a strict operational guarantee is required.
-- The API currently does not invoke this pipeline; see the root README and [architecture documentation](../docs/ARCHITECTURE.md#implementation-status).
+- The API currently does not invoke this pipeline; see the root README and [architecture documentation](../../docs/ARCHITECTURE.md#implementation-status).
