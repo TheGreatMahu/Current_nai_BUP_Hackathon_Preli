@@ -124,7 +124,7 @@ Useful endpoints:
 ### 3. Run tests
 
 ```bash
-python -m pytest -q
+pytest tests/test_api.py -v
 ```
 
 ## API At A Glance
