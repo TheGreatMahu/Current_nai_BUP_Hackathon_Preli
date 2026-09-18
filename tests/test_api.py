@@ -23,7 +23,7 @@ from app.main import app
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-SAMPLE_FILE = PROJECT_ROOT / "tests" / "data" / "live_test_data.json"
+SAMPLE_FILE = PROJECT_ROOT / "tests" / "data" / "public_sample_cases.json"
 
 with SAMPLE_FILE.open("r", encoding="utf-8") as f:
     SAMPLE_DATA = json.load(f)
