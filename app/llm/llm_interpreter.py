@@ -2,7 +2,7 @@ import os
 import json
 from groq import Groq
 from dotenv import load_dotenv
-from guardrails import validate_all
+from app.llm.guardrails import validate_all
 
 load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
