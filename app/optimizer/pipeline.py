@@ -11,17 +11,16 @@ Usage from your API handler:
 
 from __future__ import annotations
 
-from directive_applier import (
+from app.optimizer.directive_applier import (
     ScenarioInput,
-    DerivedConstraints,
     ParsedDirective,
     build_optimizer_inputs,
 )
-from optimizer import (
+
+from app.optimizer.optimizer import (
     solve_schedule,
     replay_validate,
     recalculate_totals,
-    OptimizationResult,
 )
 
 
