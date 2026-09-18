@@ -11,7 +11,7 @@ def validate_hours(hours) -> bool:
         return False
     return True
 
-def validate_one(entry, note_index, total_notes) -> dict | None:
+def validate_one(entry, note_index, total_notes, battery_info=None) -> dict | None:
     if not isinstance(entry, dict):
         return None
     
@@ -64,6 +64,9 @@ def validate_one(entry, note_index, total_notes) -> dict | None:
             minimum_energy_kwh = sa["minimum_energy_kwh"]
             if not isinstance(minimum_energy_kwh, (int, float)) or minimum_energy_kwh < 0:
                 return None
+            if battery_info and "capacity_kwh" in battery_info:
+                if minimum_energy_kwh > battery_info["capacity_kwh"]:
+                    sa["minimum_energy_kwh"] = battery_info["capacity_kwh"]
                 
         elif directive_type == "max_grid_window":
             if "max_grid_kwh" not in sa:
@@ -81,7 +84,7 @@ def validate_one(entry, note_index, total_notes) -> dict | None:
         "explanation": entry["explanation"]
     }
 
-def validate_all(llm_output, total_notes) -> list | None:
+def validate_all(llm_output, total_notes, battery_info=None) -> list | None:
     if not isinstance(llm_output, list):
         return None
     if len(llm_output) != total_notes:
@@ -89,7 +92,7 @@ def validate_all(llm_output, total_notes) -> list | None:
         
     cleaned_list = []
     for i, entry in enumerate(llm_output):
-        cleaned = validate_one(entry, i, total_notes)
+        cleaned = validate_one(entry, i, total_notes, battery_info)
         if cleaned is None:
             return None
         cleaned_list.append(cleaned)

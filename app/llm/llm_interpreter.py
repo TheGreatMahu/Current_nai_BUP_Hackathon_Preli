@@ -71,7 +71,7 @@ def interpret_notes(operator_notes: list[str], battery_info: dict = None, max_re
     for _ in range(max_retry + 1):
         try:
             llm_output = call_llm(operator_notes, battery_info)
-            validated = validate_all(llm_output, len(operator_notes))
+            validated = validate_all(llm_output, len(operator_notes), battery_info=battery_info)
             if validated is not None:
                 return validated
             else:
