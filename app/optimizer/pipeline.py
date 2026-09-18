@@ -45,6 +45,9 @@ def run_optimization_pipeline(
         ValueError: If the solver fails or replay validation finds errors.
     """
 
+    print("DEBUG directives:")
+    for d in directive_interpretations:
+        print(d)
     # ── Step 1: Parse input + apply directives ──
     scenario, parsed_directives, derived = build_optimizer_inputs(
         request_body, directive_interpretations
