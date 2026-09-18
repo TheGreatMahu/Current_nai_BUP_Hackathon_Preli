@@ -51,25 +51,30 @@ Overlapping directives are resolved conservatively:
 
 `app/optimizer/pipeline.py` is the deterministic orchestration boundary:
 
-```mermaid
-sequenceDiagram
-    participant API as API handler
-    participant LLM as Interpreter + guardrails
-    participant P as Optimization pipeline
-    participant D as Directive applier
-    participant S as LP solver
-    participant V as Replay validator
-
-    API->>LLM: operator_notes + battery context
-    LLM-->>API: validated directive interpretations
-    API->>P: request body + interpretations
-    P->>D: build_optimizer_inputs()
-    D-->>P: scenario + parsed directives + constraints
-    P->>S: solve_schedule()
-    S-->>P: hourly plan + solver status
-    P->>V: replay_validate()
-    V-->>P: validation result
-    P-->>API: response with recalculated totals
+```text
+API handler              LLM / guardrails       Optimization pipeline
+  |                            |                       |
+  |-- operator notes --------->|                       |
+  |   + battery context        |                       |
+  |                            |                       |
+  |<-- validated directive ----|                       |
+  |    interpretations         |                       |
+  |                            |                       |
+  |-- request + interpretations ----------------------->|
+  |                            |                       |
+  |                            |       build_optimizer_inputs()
+  |                            |                       |
+  |                            |       scenario + parsed directives
+  |                            |       + derived constraints
+  |                            |                       |
+  |                            |       solve_schedule()
+  |                            |                       |
+  |                            |       hourly plan + solver status
+  |                            |                       |
+  |                            |       replay_validate()
+  |                            |                       |
+  |                            |       validation result
+  |<-- response with recalculated totals ---------------|
 ```
 
 ## Data Flow

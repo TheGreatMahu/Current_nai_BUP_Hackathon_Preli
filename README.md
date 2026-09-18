@@ -25,17 +25,61 @@ GridWise translates that instruction into a machine-checkable constraint, optimi
 
 ## System Overview
 
-```mermaid
-flowchart LR
-	Client[Operator or campus system] --> API[FastAPI endpoint]
-	API --> Schema[Pydantic request validation]
-	Schema --> LLM[LLM directive interpreter]
-	LLM --> Guardrails[Deterministic guardrails]
-	Guardrails --> Directives[Directive application layer]
-	Directives --> LP[PuLP/CBC optimizer]
-	LP --> Replay[Independent replay validator]
-	Replay --> Totals[Recalculate totals]
-	Totals --> Response[Auditable optimization response]
+```text
++--------------------------+
+| Operator or campus system|
++------------+-------------+
+			 |
+			 v
++--------------------------+
+| FastAPI endpoint         |
++------------+-------------+
+			 |
+			 v
++--------------------------+
+| Pydantic request         |
+| validation               |
++------------+-------------+
+			 |
+			 v
++--------------------------+
+| LLM directive            |
+| interpreter              |
++------------+-------------+
+			 |
+			 v
++--------------------------+
+| Deterministic            |
+| guardrails               |
++------------+-------------+
+			 |
+			 v
++--------------------------+
+| Directive application    |
+| layer                    |
++------------+-------------+
+			 |
+			 v
++--------------------------+
+| PuLP/CBC optimizer       |
++------------+-------------+
+			 |
+			 v
++--------------------------+
+| Independent replay       |
+| validator                |
++------------+-------------+
+			 |
+			 v
++--------------------------+
+| Recalculate totals       |
++------------+-------------+
+			 |
+			 v
++--------------------------+
+| Auditable optimization   |
+| response                 |
++--------------------------+
 ```
 
 The repository currently contains both the public API implementation and the completed optimization pipeline. The API endpoint is still wired to a demonstration implementation that keeps the battery idle; the production pipeline is implemented in `app/optimizer/pipeline.py` and is documented as the intended integration path. See [Architecture](docs/ARCHITECTURE.md#implementation-status).
